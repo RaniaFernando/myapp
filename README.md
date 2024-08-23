@@ -1,70 +1,210 @@
-# Getting Started with Create React App
+`README.md` 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+# Courses API Documentation
 
-In the project directory, you can run:
+This API allows you to manage courses and course instances.
 
-### `npm start`
+## Base URL
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+`http://127.0.0.1:8000/api/`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Endpoints
 
-### `npm test`
+### Courses
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### **1. List All Courses**
 
-### `npm run build`
+- **Endpoint**: `/courses/`
+- **Method**: `GET`
+- **Description**: Retrieve a list of all courses.
+- **Response Example**:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  ```json
+  [
+      {
+          "id": 1,
+          "title": "Introduction to Programming",
+          "course_code": "CS101",
+          "description": "This course covers the basics of programming.",
+          "year_of_delivery": 2024,
+          "semester_of_delivery": 1
+      },
+      {
+          "id": 2,
+          "title": "Data Structures",
+          "course_code": "CS102",
+          "description": "This course covers the basics of Data Structures.",
+          "year_of_delivery": 2024,
+          "semester_of_delivery": 1
+      }
+  ]
+  ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### **2. Create a New Course**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Endpoint**: `/courses/`
+- **Method**: `POST`
+- **Description**: Create a new course.
+- **Request Body Example**:
 
-### `npm run eject`
+  ```json
+  {
+      "title": "Advanced Algorithms",
+      "course_code": "CS201",
+      "description": "This course covers advanced algorithm design and analysis.",
+      "year_of_delivery": 2024,
+      "semester_of_delivery": 2
+  }
+  ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Response Example**:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  ```json
+  {
+      "id": 3,
+      "title": "Advanced Algorithms",
+      "course_code": "CS201",
+      "description": "This course covers advanced algorithm design and analysis.",
+      "year_of_delivery": 2024,
+      "semester_of_delivery": 2
+  }
+  ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### **3. Retrieve Course Details**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **Endpoint**: `/courses/{id}/`
+- **Method**: `GET`
+- **Description**: Retrieve detailed information about a specific course by its ID.
+- **URL Parameters**:
+  - `{id}`: The ID of the course.
+- **Response Example**:
 
-## Learn More
+  ```json
+  {
+      "id": 1,
+      "title": "Introduction to Programming",
+      "course_code": "CS101",
+      "description": "This course covers the basics of programming.",
+      "year_of_delivery": 2024,
+      "semester_of_delivery": 1
+  }
+  ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### **4. Delete a Course**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Endpoint**: `/courses/{id}/`
+- **Method**: `DELETE`
+- **Description**: Delete a course by its ID.
+- **URL Parameters**:
+  - `{id}`: The ID of the course.
+- **Response**: 
+  - Status: `204 No Content` (indicates successful deletion without any content returned)
 
-### Code Splitting
+### Course Instances (If applicable)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+#### **1. Create a Course Instance**
 
-### Analyzing the Bundle Size
+- **Endpoint**: `/instances/`
+- **Method**: `POST`
+- **Description**: Create a new instance of course delivery.
+- **Request Body Example**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+  ```json
+  {
+      "course_id": 1,
+      "year_of_delivery": 2024,
+      "semester_of_delivery": 1
+  }
+  ```
 
-### Making a Progressive Web App
+- **Response Example**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+  ```json
+  {
+      "id": 1,
+      "course_id": 1,
+      "year_of_delivery": 2024,
+      "semester_of_delivery": 1
+  }
+  ```
 
-### Advanced Configuration
+#### **2. List Course Instances by Year and Semester**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- **Endpoint**: `/instances/{year}/{semester}/`
+- **Method**: `GET`
+- **Description**: Retrieve a list of course instances delivered in a specific year and semester.
+- **URL Parameters**:
+  - `{year}`: The year of course delivery.
+  - `{semester}`: The semester of course delivery (1 or 2).
+- **Response Example**:
 
-### Deployment
+  ```json
+  [
+      {
+          "id": 1,
+          "course_id": 1,
+          "year_of_delivery": 2024,
+          "semester_of_delivery": 1
+      }
+  ]
+  ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+#### **3. Retrieve Course Instance Details**
 
-### `npm run build` fails to minify
+- **Endpoint**: `/instances/{year}/{semester}/{id}/`
+- **Method**: `GET`
+- **Description**: Retrieve detailed information about a specific course instance by its ID.
+- **URL Parameters**:
+  - `{year}`: The year of course delivery.
+  - `{semester}`: The semester of course delivery.
+  - `{id}`: The ID of the course instance.
+- **Response Example**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  ```json
+  {
+      "id": 1,
+      "course_id": 1,
+      "year_of_delivery": 2024,
+      "semester_of_delivery": 1
+  }
+  ```
+
+#### **4. Delete a Course Instance**
+
+- **Endpoint**: `/instances/{year}/{semester}/{id}/`
+- **Method**: `DELETE`
+- **Description**: Delete a course instance by its ID.
+- **URL Parameters**:
+  - `{year}`: The year of course delivery.
+  - `{semester}`: The semester of course delivery.
+  - `{id}`: The ID of the course instance.
+- **Response**: 
+  - Status: `204 No Content` (indicates successful deletion without any content returned)
+
+## Error Handling
+
+- **400 Bad Request**: This status is returned when the request is malformed or contains invalid data. Example:
+
+  ```json
+  {
+      "error": "Course with this course code already exists."
+  }
+  ```
+
+- **404 Not Found**: This status is returned when a requested resource (course or instance) is not found. Example:
+
+  ```json
+  {
+      "error": "Course not found."
+  }
+  ```
+
+## Summary
+
+This API allows you to manage courses and their instances effectively. The endpoints support creating, retrieving, and deleting courses and course instances with full error handling.
+
+---
+
+You can expand on this documentation as needed, especially if you implement additional features or endpoints. It’s also a good idea to update the documentation whenever you make changes to the API. Let me know if you need any further help, babe!
