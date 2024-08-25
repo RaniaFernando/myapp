@@ -15,15 +15,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+
 from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse
+from rest_framework.routers import DefaultRouter
+from course_management.views import CourseViewSet  # Correct import from course_management
 
+# Initialize the router
+router = DefaultRouter()
+router.register(r'courses', CourseViewSet)  # Register the CourseViewSet with the router
+
+# Simple home view
 def home(request):
     return HttpResponse("Welcome to the Courses API")
 
+# URL patterns
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include('courses.urls')),
-    path('', home),  # This will handle the root URL
+    path('admin/', admin.site.urls),  # Admin route
+    path('api/', include(router.urls)),  # Include the DRF router's URLs under the 'api/' path
+    path('', home),  # Root URL, displays a simple home message
 ]
